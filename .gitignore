@@ -1,0 +1,126 @@
+# Monorepo .gitignore
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# Environment Variables & Secrets (Keep .env.example tracked)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+
+# Database & Cache Data Dirs (Local Docker Volumes)
+postgres_data/
+redis_data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Node & Web (Next.js / TypeScript)
+node_modules/
+**/node_modules/
+.pnp/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Next.js Build Output
+.next/
+**/.next/
+out/
+**/out/
+build/
+**/build/
+dist/
+**/dist/
+
+# Vercel
+.vercel/
+
+# TypeScript Build Info & Next Type Defs
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Test Coverage
+coverage/
+**/coverage/
+*.lcov
+.nyc_output/
+
+# Rust / Cargo (API)
+target/
+**/target/
+**/*.rs.bk
+
+# Flutter / Dart (App)
+Cargo.lock.backup
+.dart_tool/
+**/.dart_tool/
+.packages
+.pub-cache/
+.pub/
+pubspec.lock.backup
+
+# Flutter build artifacts
+**/build/
+android/app/debug/
+android/app/profile/
+android/app/release/
+**/android/.gradle/
+**/android/captures/
+**/android/local.properties
+**/ios/Flutter/.last_build_id
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/macos/Flutter/ephemeral/
+**/windows/flutter/ephemeral/
+**/linux/flutter/ephemeral/
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
+
+# IDEs & Editors
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~

@@ -1,0 +1,9 @@
+# Monorepo Code Owners
+# Syntax: <pattern> <owners>
+
+*                   @team-leads
+/web/               @frontend-team
+/api/               @backend-team
+/app/               @mobile-team
+/.github/           @devops-team
+docker-compose.yml  @devops-team

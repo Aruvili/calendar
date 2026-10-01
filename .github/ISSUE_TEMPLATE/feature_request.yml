@@ -1,0 +1,36 @@
+name: Feature Request
+description: Propose a new feature or improvement
+title: '[FEAT]: '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to make the Calendar app faster, lighter, or better?
+  - type: dropdown
+    id: component
+    attributes:
+      label: Target Component
+      description: Where does this feature belong?
+      options:
+        - Web (Next.js)
+        - API (Rust Actix)
+        - App (Flutter)
+        - Database (Postgres/Redis)
+        - Architecture / Tooling
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivation
+      description: What problem does this solve or what use case does it address?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented.
+    validations:
+      required: true

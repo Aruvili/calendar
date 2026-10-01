@@ -1,0 +1,16 @@
+# <type>(<scope>): <short summary in imperative mood, no period at end>
+# └─── Type: feat | fix | docs | style | refactor | perf | test | build | ci | chore | revert
+#      └─── Scope (OPTIONAL): e.g. web, api, app, fullstack, auth, calendar (or omit entirely)
+#
+# Examples for monorepo commits (single commit touching multiple folders):
+#   feat: implement real-time calendar sync across rust api and web client
+#   feat(fullstack): add user login and session handling
+#   fix: resolve timezone parsing between frontend and database
+#   refactor: simplify event payload structures across api and app
+#
+# Detailed explanation (optional):
+# - Context behind the decision
+# - Breaking changes or notable trade-offs
+#
+# Issue tracking (optional):
+# Fixes #123
