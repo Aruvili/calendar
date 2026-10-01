@@ -1,1 +1,4 @@
+# Exit early if nothing is staged to let git handle clean/empty tree gracefully
+git diff --cached --quiet && exit 0
+
 npx lint-staged
