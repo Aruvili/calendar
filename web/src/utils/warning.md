@@ -1,99 +1,77 @@
-# Development Warning Utility (`warning.ts`)
+# Warning Utility
 
-A lightweight, zero-dependency development warning and deprecation reporting utility for the Calendar design system and web components.
+## What is this for?
 
----
+This utility prints helpful warning messages in the browser console while developing components:
 
-## Purpose
-
-When building reusable UI components and design systems, developers need to communicate:
-
-- Incorrect component prop usage (e.g. missing required configurations)
-- Deprecated props being phased out in future releases
-- Breaking architectural changes
-
-This utility provides a standardized way to log these warnings during development **without including any external dependencies** (such as `@rc-component/util`) and **without impacting production bundle performance**.
+1. **Wrong prop usage**: Warns developers if they pass invalid props or forget required values.
+2. **Deprecated props**: Warns developers when using an old prop that will be removed, showing what new prop to use instead.
+3. **No console spam**: Only prints each warning once per unique message, so component re-renders won't flood your console.
+4. **Development only**: Does nothing in production builds.
 
 ---
 
-## Features
+## How to use
 
-- **Zero-Dependency**: Pure React and TypeScript.
-- **Automatic Deduplication**: Warnings are logged only once per unique message, preventing console spam during re-renders.
-- **Zero Production Overhead**: Tree-shakes to a no-op in production builds (`NODE_ENV === 'production'`).
-- **Test-Friendly**: Exposes `resetWarned()` to reset the deduplication cache between test suites.
-- **Deprecation Aggregation**: Supports `WarningContext` (`strict: false`) to group multiple deprecations into a single clean summary.
+### 1. Simple Warning (outside or inside components)
 
----
+Use `warning(condition, componentName, message)`:
 
-## API Reference
-
-### 1. Direct Warning: `warning(valid, component, message)`
-
-Logs a warning if `valid` is `false`.
+- If `condition` is `false`, it logs a warning.
 
 ```tsx
 import warning from '@/utils/warning';
 
-function CalendarGrid({ days }: CalendarGridProps) {
-  warning(days.length > 0, 'CalendarGrid', '`days` array should not be empty');
+export function Button({ icon, children }: ButtonProps) {
+  // Warn if someone creates a button with no label and no icon
+  warning(Boolean(icon || children), 'Button', 'Button must have either text or an icon.');
 
-  return <div>...</div>;
+  return (
+    <button>
+      {icon} {children}
+    </button>
+  );
 }
 ```
 
-### 2. Component Hook: `useDevWarning(component)` (alias: `devUseWarning`)
+---
 
-Returns a type-aware warning function specifically for components.
+### 2. In Components (Hook: `devUseWarning`)
 
-#### Methods:
-
-- `devWarning(valid, 'usage' | 'deprecated' | 'breaking', message)`
-- `devWarning.deprecated(valid, oldProp, newProp, extraMessage?)`
+Use `devUseWarning(componentName)` inside React components:
 
 ```tsx
 import { devUseWarning } from '@/utils/warning';
 
-interface EventItemProps {
-  date?: string;
-  /** @deprecated use `date` instead */
-  eventDate?: string;
+interface CalendarProps {
+  viewMode?: 'day' | 'week' | 'month';
+  /** @deprecated Use `viewMode` instead */
+  mode?: 'day' | 'week' | 'month';
 }
 
-export function EventItem({ date, eventDate }: EventItemProps) {
-  const devWarning = devUseWarning('EventItem');
+export function Calendar({ viewMode, mode }: CalendarProps) {
+  const devWarning = devUseWarning('Calendar');
 
-  // Deprecated prop notification
-  devWarning.deprecated(!eventDate, 'eventDate', 'date');
+  // 1. Warn if an old prop is used
+  devWarning.deprecated(!mode, 'mode', 'viewMode');
 
-  // Usage validation
-  devWarning(Boolean(date || eventDate), 'usage', 'Must provide a valid date');
+  // 2. Warn if usage is incorrect
+  devWarning(
+    !viewMode || ['day', 'week', 'month'].includes(viewMode),
+    'usage',
+    '`viewMode` must be "day", "week", or "month".',
+  );
 
   return <div>...</div>;
 }
 ```
 
-### 3. Aggregation Context: `<WarningContext.Provider>`
+---
 
-Controls whether deprecation notices appear immediately or get batched:
+### 3. Warning Types
 
-```tsx
-import { WarningContext } from '@/utils/warning';
-
-// Aggregate deprecation warnings into a single console summary:
-<WarningContext.Provider value={{ strict: false }}>
-  <App />
-</WarningContext.Provider>;
-```
-
-### 4. Testing Reset: `resetWarned()`
-
-Clears the deduplication cache so warnings can be tested repeatedly across unit tests:
-
-```tsx
-import { resetWarned } from '@/utils/warning';
-
-afterEach(() => {
-  resetWarned();
-});
-```
+| Type         | When to use                             | Example                                                  |
+| :----------- | :-------------------------------------- | :------------------------------------------------------- |
+| `usage`      | Wrong prop value or missing combination | `devWarning(hasDate, 'usage', 'Event must have a date')` |
+| `deprecated` | Old prop being replaced                 | `devWarning.deprecated(!oldProp, 'oldProp', 'newProp')`  |
+| `breaking`   | Removed feature or critical change      | `devWarning(false, 'breaking', 'Feature X was removed')` |
