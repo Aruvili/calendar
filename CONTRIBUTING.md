@@ -110,7 +110,6 @@ When you make a commit:
    - Checks/formats changed `web/**/*.{ts,tsx}` files using ESLint & Prettier
    - Validates formatting on changed `api/**/*.rs` files via `cargo fmt`
    - Formats Markdown, JSON, and YAML files
-3. **`pre-push`**: Ensures you cannot push directly to `main` without a pull request.
 
 ---
 

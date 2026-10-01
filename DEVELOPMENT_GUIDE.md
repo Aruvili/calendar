@@ -139,7 +139,6 @@ This repository is optimized for **atomic monorepo commits** (no need to make se
 3. **Interactive Commit Wizard**: Run `npm run commit` (or `make commit`) to guide you step-by-step.
 4. **Pre-commit**: Automatically formats and lints staged files across any modified folders using `lint-staged`.
 5. **Commit-msg**: Enforces Conventional Commits type validation.
-6. **Pre-push**: Blocks direct pushes to `main` to protect trunk stability.
 
 ---
 
